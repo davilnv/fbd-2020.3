@@ -1,0 +1,221 @@
+package br.com.view;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.util.ArrayList;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
+import br.com.model.Comanda;
+import br.com.model.Prato;
+import br.com.model.Produto;
+
+public class PainelPedidos extends PainelGenerico{
+	private ArrayList<JLabel> mesas = new ArrayList<>();
+	private ImageIcon mesaIcon = new ImageIcon(getClass().getClassLoader().getResource("mesa-icon.png"));
+	private JButton adicionarButton, removerButton, fecharMesaButton;
+	private TelaComanda telaComanda;
+	private JTable tabela;
+	private JScrollPane barraRolagem;
+	private DefaultTableModel modelo = new DefaultTableModel();
+	
+	public PainelPedidos() {
+		ImageIcon addIcon = new ImageIcon(getClass().getClassLoader().getResource("add-icon.png"));
+		ImageIcon removerIcon = new ImageIcon(getClass().getClassLoader().getResource("remover-icon.png"));
+		ImageIcon fecharMesaIcon = new ImageIcon(getClass().getClassLoader().getResource("fecha-icon.png"));
+		
+		criarColunasMesas();
+		telaComanda = new TelaComanda();
+		
+		tabela = new JTable(modelo);
+		modelo.addColumn("Nome");
+		modelo.addColumn("Preço");
+		modelo.addColumn("Peso");
+		tabela.getColumnModel().getColumn(0).setPreferredWidth(170);
+		tabela.getColumnModel().getColumn(1).setPreferredWidth(45);
+		tabela.getColumnModel().getColumn(2).setPreferredWidth(40);
+		modelo.setNumRows(0);
+		
+		barraRolagem = new JScrollPane(tabela);
+		barraRolagem.setBounds(1055, 315, 255, 150);
+		adicionarButton = new JButton(addIcon);
+		adicionarButton.setBounds(1065, 535, 30, 30);
+		removerButton = new JButton(removerIcon);
+		removerButton.setBounds(1105, 535, 30, 30);
+		fecharMesaButton = new JButton("Fechar Mesa", fecharMesaIcon);
+		fecharMesaButton.setBounds(1145, 535, 150, 30);
+		
+		add(barraRolagem);
+		add(adicionarButton);
+		add(removerButton);
+		add(fecharMesaButton);
+		
+		setVisible(true);
+	}
+	
+	public void criarTabela(ArrayList<Prato> pratos, ArrayList<Produto> produtos) {
+		
+		
+		for (Prato prato : pratos) {
+			modelo.addRow(new Object[] {prato.getNome(), prato.getPreco(), prato.getPeso()});
+		}
+		
+		for (Produto produto : produtos) {
+			modelo.addRow(new Object[] {produto.getNome(), produto.getPreco(), produto.getPeso()});
+		}
+	}
+
+	public void colunaMesas(int x) {
+		int cont = 130;
+		for(int i = 0; i<=3; i++) {
+			JLabel mesa = new JLabel(mesaIcon);
+			cont= cont + 100;
+			mesa.setBounds(x, cont, 50, 50);
+			add(mesa);
+			mesas.add(mesa);
+		}
+	}
+	
+	public void criarColunasMesas() {
+		colunaMesas(50);
+		colunaMesas(150);
+		colunaMesas(250);
+		colunaMesas(350);
+		colunaMesas(450);
+		colunaMesas(550);
+		colunaMesas(650);
+		colunaMesas(750);
+		colunaMesas(850);
+		colunaMesas(950);
+	}
+	
+	@Override
+	protected void paintComponent(Graphics g) {
+		g.setColor(Color.WHITE);
+		g.fillRect(0, 80, TelaPrincipal.LARGURA, 700);
+		g.setColor(Color.GRAY);
+		g.fillRect(0, 80, TelaPrincipal.LARGURA, 100);
+		g.fillRect(1050, 230, 266, 350);
+		g.setColor(Color.WHITE);
+		g.fillRect(1055, 235, 255, 340);
+
+		g.setFont(new Font("Roboto", Font.BOLD, 15));
+		
+		g.setColor(Color.DARK_GRAY);
+		g.fillRect(1216, 95, 50, 50);
+		g.drawImage(mesaIcon.getImage(), 1216, 95, null);
+		g.setColor(Color.BLACK);
+		g.drawString("Manutenção", 1197, 165);
+		
+		g.setColor(Color.YELLOW);
+		g.fillRect(1116, 95, 50, 50);
+		g.drawImage(mesaIcon.getImage(), 1116, 95, null);
+		g.setColor(Color.BLACK);
+		g.drawString("Reserva", 1111, 165);
+		
+		g.setColor(Color.ORANGE);
+		g.fillRect(1016, 95, 50, 50);
+		g.drawImage(mesaIcon.getImage(), 1016, 95, null);
+		g.setColor(Color.BLACK);
+		g.drawString("Limpeza", 1011, 165);
+		
+		g.setColor(Color.RED);
+		g.fillRect(916, 95, 50, 50);
+		g.drawImage(mesaIcon.getImage(), 916, 95, null);
+		g.setColor(Color.BLACK);
+		g.drawString("Em uso", 915, 165);
+		
+		g.setColor(Color.GREEN);
+		g.fillRect(816, 95, 50, 50);
+		g.drawImage(mesaIcon.getImage(), 816, 95, null);
+		g.setColor(Color.BLACK);
+		g.drawString("Livre", 823, 165);
+		
+		for (int i = 0; i <= mesas.size()-1; i++) {
+			g.setColor(Color.GREEN);
+			int x = mesas.get(i).getX();
+			int y = mesas.get(i).getY();
+			g.fillRect(x, y, 50, 50);
+		}
+		
+		for (int i = 0; i <= mesas.size()-1; i++) {
+			int x = mesas.get(i).getX();
+			int y = mesas.get(i).getY();
+			int n = i+1;
+			if (n <10) {
+				g.setColor(Color.BLACK);
+				g.drawString("0"+n, x+15, y-5);
+			} else {				
+				g.setColor(Color.BLACK);
+				g.drawString(""+n, x+15, y-5);
+			}
+		}
+		
+		desenharComanda(g);
+		
+	}
+	
+	private void desenharComanda(Graphics g) {
+		g.drawRect(1055, 235, 100, 40);
+		g.drawRect(1155, 235, 155, 40);
+		g.drawRect(1055, 275, 127, 40);
+		g.drawRect(1182, 275, 128, 40);
+		g.drawRect(1055, 315, 255, 150);
+		g.drawRect(1055, 465, 165, 60);
+		g.drawRect(1220, 465, 90, 60);
+		g.drawRect(1055, 525, 255, 50);
+		g.drawString("Mesa: ", 1070, 260);
+		g.setFont(new Font("Roboto", Font.BOLD, 13));
+		g.drawString("Código: ", 1160, 260);
+		g.setFont(new Font("Roboto", Font.BOLD, 15));
+		g.drawString("Operador:", 1060, 290);
+		g.drawString("Cliente:", 1187, 290);
+		g.drawString("Total (R$):", 1060, 480);
+	}
+	
+	public void desenharComponetesComanda(int numero, Comanda comanda) {
+		Graphics g = getGraphics();
+		g.setFont(new Font("Roboto", Font.BOLD, 15));
+		g.setColor(Color.WHITE);
+		g.fillRect(1120, 245, 30, 30);
+		g.fillRect(1216, 250, 90, 10);
+
+		g.setColor(Color.BLACK);
+		if (numero < 10) {
+			g.drawString("0"+numero, 1120, 260);
+		} else {
+			g.drawString(""+numero, 1120, 260);
+		}
+		g.setFont(new Font("Roboto", Font.BOLD, 13));
+		g.drawString(comanda.getCódigo(), 1216, 260);
+	}
+
+	public ArrayList<JLabel> getMesas() {
+		return mesas;
+	}
+
+	public JButton getAdicionarButton() {
+		return adicionarButton;
+	}
+
+	public JButton getRemoverButton() {
+		return removerButton;
+	}
+
+	public JButton getFecharMesaButton() {
+		return fecharMesaButton;
+	}
+	
+	public TelaComanda getTelaComanda() {
+		return telaComanda;
+	}
+
+}

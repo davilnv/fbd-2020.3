@@ -10,4 +10,5 @@ public interface IBusinessUsuario {
 	public Usuario cadastrar(Usuario usuario) throws BusinessException;
 	public ArrayList<Usuario> listarTodos();
 	public boolean isCpf(String cpf) throws BusinessException;
+	public boolean verificarUsuario(Usuario usuario) throws BusinessException;
 }

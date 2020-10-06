@@ -28,7 +28,7 @@ public class BusinessUsuario implements IBusinessUsuario{
 
 	@Override
 	public ArrayList<Usuario> listarTodos() {
-		return null;
+		return daoUsuario.listarTodos();
 	}
 
 	@Override
@@ -37,6 +37,19 @@ public class BusinessUsuario implements IBusinessUsuario{
 			return this.daoUsuario.isCpf(cpf);
 		} catch (DaoException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new BusinessException(e.getMessage());
+		}
+	}
+
+	@Override
+	public boolean verificarUsuario(Usuario usuario) throws BusinessException{
+		try {
+			if (usuario.getLogin().equals("") || usuario.getSenha().equals("")) {
+				throw new BusinessException("Todos os campos devem ser preenchidos");
+			}
+			return daoUsuario.verificarUsuario(usuario);
+		} catch (DaoException e) {
 			e.printStackTrace();
 			throw new BusinessException(e.getMessage());
 		}

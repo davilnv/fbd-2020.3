@@ -7,6 +7,8 @@ public class Usuario {
 	private String login;
 	private String senha;
 	
+	public Usuario() {}
+	
 	public Usuario(String nome, String cpf, String login, String senha) {
 		super();
 		this.nome = nome;
@@ -53,6 +55,11 @@ public class Usuario {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+
+	@Override
+	public String toString() {
+		return "Usuario [id=" + id + ", nome=" + nome + ", cpf=" + cpf + ", login=" + login + ", senha=" + senha + "]";
 	}
 	
 }
