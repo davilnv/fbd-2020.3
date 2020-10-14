@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import br.com.model.Comanda;
@@ -21,7 +22,9 @@ import br.com.model.Produto;
 public class PainelPedidos extends PainelGenerico{
 	private ArrayList<JLabel> mesas = new ArrayList<>();
 	private ImageIcon mesaIcon = new ImageIcon(getClass().getClassLoader().getResource("mesa-icon.png"));
-	private JButton adicionarButton, removerButton, fecharMesaButton;
+	private JLabel nomeClienteLabel;
+	private JTextField nomeClienteField;
+	private JButton adicionarButton, removerButton, abrirMesa, fecharMesaButton, okButton;
 	private TelaComanda telaComanda;
 	private JTable tabela;
 	private JScrollPane barraRolagem;
@@ -31,6 +34,7 @@ public class PainelPedidos extends PainelGenerico{
 		ImageIcon addIcon = new ImageIcon(getClass().getClassLoader().getResource("add-icon.png"));
 		ImageIcon removerIcon = new ImageIcon(getClass().getClassLoader().getResource("remover-icon.png"));
 		ImageIcon fecharMesaIcon = new ImageIcon(getClass().getClassLoader().getResource("fecha-icon.png"));
+		ImageIcon abrirMesaIcon = new ImageIcon(getClass().getClassLoader().getResource("abrir-icon.png"));
 		
 		criarColunasMesas();
 		telaComanda = new TelaComanda();
@@ -46,24 +50,40 @@ public class PainelPedidos extends PainelGenerico{
 		
 		barraRolagem = new JScrollPane(tabela);
 		barraRolagem.setBounds(1055, 315, 255, 150);
+		
 		adicionarButton = new JButton(addIcon);
 		adicionarButton.setBounds(1065, 535, 30, 30);
 		removerButton = new JButton(removerIcon);
 		removerButton.setBounds(1105, 535, 30, 30);
+		abrirMesa = new JButton("Abrir Mesa", abrirMesaIcon);
+		abrirMesa.setBounds(50, 115, 140, 30);
 		fecharMesaButton = new JButton("Fechar Mesa", fecharMesaIcon);
 		fecharMesaButton.setBounds(1145, 535, 150, 30);
+		okButton = new JButton("Ok");
+		okButton.setBounds(540, 115, 60, 30);
+		okButton.setVisible(false);
+		
+		nomeClienteLabel = new JLabel("Nome do cliente:");
+		nomeClienteLabel.setBounds(200, 120, 120, 20);
+		nomeClienteLabel.setVisible(false);
+		nomeClienteField = new JTextField();
+		nomeClienteField.setBounds(330, 115, 200, 30);
+		nomeClienteField.setVisible(false);
 		
 		add(barraRolagem);
 		add(adicionarButton);
 		add(removerButton);
+		add(abrirMesa);
 		add(fecharMesaButton);
+		add(okButton);
+		add(nomeClienteLabel);
+		add(nomeClienteField);
 		
 		setVisible(true);
 	}
 	
 	public void criarTabela(ArrayList<Prato> pratos, ArrayList<Produto> produtos) {
-		
-		
+		modelo.setNumRows(0);
 		for (Prato prato : pratos) {
 			modelo.addRow(new Object[] {prato.getNome(), prato.getPreco(), prato.getPeso()});
 		}
@@ -181,12 +201,14 @@ public class PainelPedidos extends PainelGenerico{
 		g.drawString("Total (R$):", 1060, 480);
 	}
 	
-	public void desenharComponetesComanda(int numero, Comanda comanda) {
+	public void desenharComponetesComanda(int numero, Comanda comanda, String operador) {
 		Graphics g = getGraphics();
 		g.setFont(new Font("Roboto", Font.BOLD, 15));
 		g.setColor(Color.WHITE);
 		g.fillRect(1120, 245, 30, 30);
 		g.fillRect(1216, 250, 90, 10);
+		g.fillRect(1187, 298, 120, 12);
+		
 
 		g.setColor(Color.BLACK);
 		if (numero < 10) {
@@ -194,12 +216,37 @@ public class PainelPedidos extends PainelGenerico{
 		} else {
 			g.drawString(""+numero, 1120, 260);
 		}
+		if (comanda.getNome_cliente() != null) {
+			g.drawString(comanda.getNome_cliente(), 1187, 310);
+		} 
 		g.setFont(new Font("Roboto", Font.BOLD, 13));
 		g.drawString(comanda.getCódigo(), 1216, 260);
+		g.drawString(operador, 1060, 310);
 	}
 
+	public void escreverMensagemErro() {
+		Graphics g = getGraphics();
+		g.setColor(Color.RED);
+		g.setFont(new Font("Roboto", Font.BOLD, 11));
+		g.drawString("Selecione uma mesa e digite um nome", 330, 160);
+	}
+	
+	public void corrigirMensagemErro() {
+		Graphics g = getGraphics();
+		g.setColor(Color.GRAY);
+		g.fillRect(330, 145, 225, 20);
+	}
+	
 	public ArrayList<JLabel> getMesas() {
 		return mesas;
+	}
+
+	public JLabel getNomeClienteLabel() {
+		return nomeClienteLabel;
+	}
+
+	public JTextField getNomeClienteField() {
+		return nomeClienteField;
 	}
 
 	public JButton getAdicionarButton() {
@@ -208,6 +255,14 @@ public class PainelPedidos extends PainelGenerico{
 
 	public JButton getRemoverButton() {
 		return removerButton;
+	}
+
+	public JButton getOkButton() {
+		return okButton;
+	}
+
+	public JButton getAbrirMesaButton() {
+		return abrirMesa;
 	}
 
 	public JButton getFecharMesaButton() {

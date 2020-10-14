@@ -10,4 +10,5 @@ public interface IDaoUsuario {
 	public ArrayList<Usuario> listarTodos();
 	public boolean isCpf(String cpf) throws DaoException;
 	public boolean verificarUsuario(Usuario usuario) throws DaoException;
+	public String pegarNome(String login);
 }

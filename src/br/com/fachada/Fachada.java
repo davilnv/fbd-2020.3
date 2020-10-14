@@ -1,6 +1,5 @@
 package br.com.fachada;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 
 import br.com.business.BusinessComanda;
@@ -8,7 +7,6 @@ import br.com.business.BusinessPrato;
 import br.com.business.BusinessProduto;
 import br.com.business.BusinessUsuario;
 import br.com.exception.BusinessException;
-import br.com.exception.DaoException;
 import br.com.model.Prato;
 import br.com.model.Produto;
 import br.com.model.Usuario;
@@ -38,10 +36,20 @@ public class Fachada implements IFachada{
 	public boolean verificarUsuario(Usuario usuario) throws BusinessException {
 		return businessUsuario.verificarUsuario(usuario);
 	}
+	
+	@Override
+	public String pegarNomeUsuario(String login) {
+		return businessUsuario.pegarNome(login);
+	}
 
 	@Override
 	public Prato cadastrarPrato(Prato prato) throws BusinessException {
 		return businessPrato.cadastrar(prato);
+	}
+
+	@Override
+	public Prato procurarPratoPorId(int id) throws BusinessException {
+		return businessPrato.procurarPorId(id);
 	}
 
 	@Override
@@ -50,13 +58,13 @@ public class Fachada implements IFachada{
 	}
 
 	@Override
-	public Produto procurarProdutoPorId(int id) throws BusinessException, ParseException {
+	public Produto procurarProdutoPorId(int id) throws BusinessException{
 		return businessProduto.procurar(id);
 	}
 
 	@Override
-	public Prato procurarPratoPorId(int id) throws BusinessException {
-		return businessPrato.procurarPorId(id);
+	public ArrayList<Produto> procurarProdutoPorNome(String nome) throws BusinessException {
+		return businessProduto.procurarPorNome(nome);
 	}
 
 	@Override

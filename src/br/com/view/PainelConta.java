@@ -3,8 +3,17 @@ package br.com.view;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import javax.swing.JButton;
+
 public class PainelConta extends PainelGenerico{
+	
+	private JButton sairButton;
+	
 	public PainelConta() {
+		sairButton = new JButton("Sair");
+		sairButton.setBounds(500, 500, 150, 30);
+		
+		add(sairButton);
 	}
 	
 	@Override
@@ -14,4 +23,9 @@ public class PainelConta extends PainelGenerico{
 		g.setColor(Color.RED);
 		g.fillRect(50, 240, 50, 50);
 	}
+
+	public JButton getSairButton() {
+		return sairButton;
+	}
+	
 }

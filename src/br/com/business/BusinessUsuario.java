@@ -55,4 +55,9 @@ public class BusinessUsuario implements IBusinessUsuario{
 		}
 	}
 
+	@Override
+	public String pegarNome(String login) {
+		return daoUsuario.pegarNome(login);
+	}
+
 }

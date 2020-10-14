@@ -16,7 +16,7 @@ public class Controle{
 		TelaPrincipal telaPrincipal  = new TelaPrincipal("Principal");
 		
 		controleLogin = new ControleLogin(fachada, telaLogin, telaPrincipal);
-		controlePrincipal = new ControlePrincipal(fachada, telaLogin, telaPrincipal);
+		controlePrincipal = new ControlePrincipal(fachada, telaLogin, telaPrincipal, controleLogin);
 	}
 	
 }

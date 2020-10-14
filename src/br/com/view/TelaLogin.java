@@ -66,6 +66,9 @@ public class TelaLogin extends TelaGenerica{
 		
 		@Override
 		protected void paintComponent(Graphics g) {
+			g.setColor(Color.LIGHT_GRAY);
+			g.fillRect(0, 0, TelaGenerica.LARGURA, TelaGenerica.ALTURA);
+			g.setColor(Color.BLACK);
 			g.setFont(new Font("Roboto", Font.BOLD, 16));
 			g.drawString("Login:", 533, 330);
 			g.drawString("Senha:", 533, 390);
@@ -74,6 +77,8 @@ public class TelaLogin extends TelaGenerica{
 		
 		public void msgErroUsuario(String mensagem) {
 			Graphics g = this.getGraphics();
+			g.setColor(Color.LIGHT_GRAY);
+			g.fillRect(533, 438, 325, 15);
 			g.setColor(Color.RED);
 			g.drawString(mensagem, 533, 450);
 		}

@@ -20,6 +20,7 @@ public class SqlUtil {
 		public final static String SELECT_CPF = "SELECT * FROM " + NAME_TABLE + " a WHERE a.cpf = ?";
 		public final static String SELECT_ALL = "SELECT * FROM " + NAME_TABLE;
 		public final static String SELECT_LOGIN_SENHA = "SELECT * FROM " + NAME_TABLE + " WHERE login = ? AND senha = ?";
+		public static final String SELECT_NOME = "SELECT " + COL_NOME +" FROM " + NAME_TABLE + " WHERE login = ?";
 	}
 	
 	public static class PratoSql {
@@ -51,6 +52,9 @@ public class SqlUtil {
 				COL_VALIDADE + ", " + COL_QUANTIDADE + ")" +
 				" VALUES(?,?,?,?,?,?)";
 		public final static String SELECT_ID = "SELECT * FROM " + NAME_TABLE + " WHERE " + COL_ID + " = ?";
+		public static final String SELECT_PESQUISA_NOME = "SELECT * FROM " + NAME_TABLE +
+				" WHERE LOWER(" + COL_NOME +") LIKE ALL" + 
+				" (string_to_array('%' || regexp_replace(LOWER(?), '\\s+', '% %', 'g') || '%', ' '));";
 	}
 	
 	public static class ComandaSql {

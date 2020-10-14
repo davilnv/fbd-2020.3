@@ -99,4 +99,21 @@ public class DaoUsuario implements IDaoUsuario{
 		return false;
 	}
 
+	@Override
+	public String pegarNome(String login) {
+		this.abrirConexao();
+		try {
+			this.statement = this.conexao.prepareStatement(SqlUtil.UsuarioSql.SELECT_NOME);
+			this.statement.setString(1, login);
+			this.result = this.statement.executeQuery();
+			while (result.next()) {				
+				return result.getString(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "";
+	}
+
 }

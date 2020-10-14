@@ -15,11 +15,13 @@ public class ControleLogin implements ActionListener{
 	private Fachada fachada;
 	private TelaLogin telaLogin;
 	private TelaPrincipal telaPrincipal;
+	public Usuario usuarioLogado;
 	
 	public ControleLogin(Fachada fachada, TelaLogin telaLogin, TelaPrincipal telaPrincipal) {
 		this.fachada = fachada;
 		this.telaLogin = telaLogin;
 		this.telaPrincipal = telaPrincipal;
+		usuarioLogado = new Usuario();
 		
 		telaLogin.getEntrarButton().addActionListener(this);
 		telaLogin.getLoginField().addActionListener(this);
@@ -36,6 +38,7 @@ public class ControleLogin implements ActionListener{
 				if (fachada.verificarUsuario(user)) {
 					telaPrincipal.setVisible(true);
 					telaLogin.setVisible(false);
+					usuarioLogado.setLogin(login);
 				}
 			} catch (BusinessException e1) {
 				// TODO Auto-generated catch block

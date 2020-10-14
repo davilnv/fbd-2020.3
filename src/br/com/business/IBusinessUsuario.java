@@ -11,4 +11,5 @@ public interface IBusinessUsuario {
 	public ArrayList<Usuario> listarTodos();
 	public boolean isCpf(String cpf) throws BusinessException;
 	public boolean verificarUsuario(Usuario usuario) throws BusinessException;
+	public String pegarNome(String login);
 }
