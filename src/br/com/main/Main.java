@@ -28,16 +28,23 @@ public class Main {
 		
 		
 		Prato prato = new Prato("Almoço do dia", 14.99f, "Arroz, Feijão, Batat Frita e Bife", 0.5f);
+		
 		Produto produto = new Produto("Coca-cola Lata", 4.5f, "Refrigerante de cola", 0.350f, validade, 50);
 		Produto produto2 = new Produto("Fanta Lata", 3.5f, "Refrigerante de laranja", 0.350f, validade2, 50);
 		
 		Date data = new Date();
 		
-		Comanda comanda = new Comanda("Davi Lima", data, 1, "Cliente da casa", 123.54f, "cartao", 1);
+		Comanda comanda = new Comanda("Davi Lima", data, 1, 123.54f, "cartao", 1);
+		comanda.setCódigo(Codigo.gerarCodigo(fachada));
+		comanda.getProdutos().add(produto);
+		comanda.getProdutos().add(produto2);
+		comanda.getPratos().add(prato);
+		comanda.converterArrayStringId();
 		
 		Controle controle = new Controle(fachada);
 		
 //		try {
+////			fachada.salvarComanda(comanda);
 ////			fachada.cadastrarUsuario(usuario);
 ////			fachada.cadastrarUsuario(usuario3);
 ////			fachada.cadastrarPrato(prato);

@@ -26,9 +26,10 @@ public class PainelPedidos extends PainelGenerico{
 	private JTextField nomeClienteField;
 	private JButton adicionarButton, removerButton, abrirMesa, fecharMesaButton, okButton;
 	private TelaComanda telaComanda;
-	private JTable tabela;
-	private JScrollPane barraRolagem;
-	private DefaultTableModel modelo = new DefaultTableModel();
+	private JTable tabelaProduto, tabelaPrato;
+	private JScrollPane barraRolagemProduto, barraRolagemPrato;
+	private DefaultTableModel modeloProduto = new DefaultTableModel();
+	private DefaultTableModel modeloPrato = new DefaultTableModel();
 	
 	public PainelPedidos() {
 		ImageIcon addIcon = new ImageIcon(getClass().getClassLoader().getResource("add-icon.png"));
@@ -39,17 +40,28 @@ public class PainelPedidos extends PainelGenerico{
 		criarColunasMesas();
 		telaComanda = new TelaComanda();
 		
-		tabela = new JTable(modelo);
-		modelo.addColumn("Nome");
-		modelo.addColumn("Preço");
-		modelo.addColumn("Peso");
-		tabela.getColumnModel().getColumn(0).setPreferredWidth(170);
-		tabela.getColumnModel().getColumn(1).setPreferredWidth(45);
-		tabela.getColumnModel().getColumn(2).setPreferredWidth(40);
-		modelo.setNumRows(0);
+		tabelaProduto = new JTable(modeloProduto);
+		tabelaPrato = new JTable(modeloPrato);
+		modeloProduto.addColumn("Nome (Produto)");
+		modeloProduto.addColumn("Preço");
+		modeloProduto.addColumn("Peso");
+		tabelaProduto.getColumnModel().getColumn(0).setPreferredWidth(170);
+		tabelaProduto.getColumnModel().getColumn(1).setPreferredWidth(45);
+		tabelaProduto.getColumnModel().getColumn(2).setPreferredWidth(40);
+		modeloPrato.addColumn("Nome (Prato)");
+		modeloPrato.addColumn("Preço");
+		modeloPrato.addColumn("Peso");
+		tabelaPrato.getColumnModel().getColumn(0).setPreferredWidth(170);
+		tabelaPrato.getColumnModel().getColumn(1).setPreferredWidth(45);
+		tabelaPrato.getColumnModel().getColumn(2).setPreferredWidth(40);
+		modeloProduto.setNumRows(0);
+		modeloPrato.setNumRows(0);
 		
-		barraRolagem = new JScrollPane(tabela);
-		barraRolagem.setBounds(1055, 315, 255, 150);
+		barraRolagemProduto = new JScrollPane(tabelaProduto);
+		barraRolagemProduto.setBounds(1055, 315, 255, 100);
+		
+		barraRolagemPrato = new JScrollPane(tabelaPrato);
+		barraRolagemPrato.setBounds(1055, 415, 255, 85);
 		
 		adicionarButton = new JButton(addIcon);
 		adicionarButton.setBounds(1065, 535, 30, 30);
@@ -70,7 +82,8 @@ public class PainelPedidos extends PainelGenerico{
 		nomeClienteField.setBounds(330, 115, 200, 30);
 		nomeClienteField.setVisible(false);
 		
-		add(barraRolagem);
+		add(barraRolagemProduto);
+		add(barraRolagemPrato);
 		add(adicionarButton);
 		add(removerButton);
 		add(abrirMesa);
@@ -82,14 +95,17 @@ public class PainelPedidos extends PainelGenerico{
 		setVisible(true);
 	}
 	
-	public void criarTabela(ArrayList<Prato> pratos, ArrayList<Produto> produtos) {
-		modelo.setNumRows(0);
-		for (Prato prato : pratos) {
-			modelo.addRow(new Object[] {prato.getNome(), prato.getPreco(), prato.getPeso()});
-		}
-		
+	public void criarTabelaProduto(ArrayList<Produto> produtos) {
+		modeloProduto.setNumRows(0);
 		for (Produto produto : produtos) {
-			modelo.addRow(new Object[] {produto.getNome(), produto.getPreco(), produto.getPeso()});
+			modeloProduto.addRow(new Object[] {produto.getNome(), produto.getPreco(), produto.getPeso()});
+		}
+	}
+	
+	public void criarTabelaPrato(ArrayList<Prato> pratos) {
+		modeloPrato.setNumRows(0);
+		for (Prato prato : pratos) {
+			modeloPrato.addRow(new Object[] {prato.getNome(), prato.getPreco(), prato.getPeso()});
 		}
 	}
 
@@ -181,6 +197,9 @@ public class PainelPedidos extends PainelGenerico{
 		
 		desenharComanda(g);
 		
+		g.setColor(Color.RED);
+		g.drawString("Para atualizar os dados da comanda, clique novamente na mesa correspondente a comanda.", 50, 630);
+		
 	}
 	
 	private void desenharComanda(Graphics g) {
@@ -188,9 +207,8 @@ public class PainelPedidos extends PainelGenerico{
 		g.drawRect(1155, 235, 155, 40);
 		g.drawRect(1055, 275, 127, 40);
 		g.drawRect(1182, 275, 128, 40);
-		g.drawRect(1055, 315, 255, 150);
-		g.drawRect(1055, 465, 165, 60);
-		g.drawRect(1220, 465, 90, 60);
+		g.drawRect(1055, 315, 255, 185);
+		g.drawRect(1055, 500, 255, 25);
 		g.drawRect(1055, 525, 255, 50);
 		g.drawString("Mesa: ", 1070, 260);
 		g.setFont(new Font("Roboto", Font.BOLD, 13));
@@ -198,7 +216,7 @@ public class PainelPedidos extends PainelGenerico{
 		g.setFont(new Font("Roboto", Font.BOLD, 15));
 		g.drawString("Operador:", 1060, 290);
 		g.drawString("Cliente:", 1187, 290);
-		g.drawString("Total (R$):", 1060, 480);
+		g.drawString("Total (R$):", 1060, 518);
 	}
 	
 	public void desenharComponetesComanda(int numero, Comanda comanda, String operador) {
@@ -208,7 +226,7 @@ public class PainelPedidos extends PainelGenerico{
 		g.fillRect(1120, 245, 30, 30);
 		g.fillRect(1216, 250, 90, 10);
 		g.fillRect(1187, 298, 120, 12);
-		
+		g.fillRect(1150, 505, 150, 20);
 
 		g.setColor(Color.BLACK);
 		if (numero < 10) {
@@ -222,6 +240,7 @@ public class PainelPedidos extends PainelGenerico{
 		g.setFont(new Font("Roboto", Font.BOLD, 13));
 		g.drawString(comanda.getCódigo(), 1216, 260);
 		g.drawString(operador, 1060, 310);
+		g.drawString(""+comanda.getTotal(), 1150, 518);
 	}
 
 	public void escreverMensagemErro() {
@@ -271,6 +290,22 @@ public class PainelPedidos extends PainelGenerico{
 	
 	public TelaComanda getTelaComanda() {
 		return telaComanda;
+	}
+
+	public JTable getTabelaProduto() {
+		return tabelaProduto;
+	}
+	
+	public JTable getTabelaPrato() {
+		return tabelaPrato;
+	}
+
+	public DefaultTableModel getModeloProduto() {
+		return modeloProduto;
+	}
+	
+	public DefaultTableModel getModeloPrato() {
+		return modeloPrato;
 	}
 
 }

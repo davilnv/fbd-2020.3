@@ -5,10 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.ArrayList;
 
 import br.com.connection.SqlConnection;
 import br.com.model.Prato;
-import br.com.model.Produto;
 import br.com.util.SqlUtil;
 
 public class DaoPrato implements IDaoPrato{
@@ -59,6 +59,30 @@ public class DaoPrato implements IDaoPrato{
 			e.printStackTrace();
 		}
 		return prato;
+	}
+
+	@Override
+	public ArrayList<Prato> procurarPorNome(String nome) {
+		this.abrirConexao();
+		ArrayList<Prato> pratos = new ArrayList<>();
+		try {
+			this.statement = conexao.prepareStatement(SqlUtil.PratoSql.SELECT_PESQUISA_NOME);
+			this.statement.setString(1, nome);
+			this.result = statement.executeQuery();
+			while (result.next()) {				
+				Prato prato = new Prato();
+				prato.setId(Integer.parseInt(result.getObject(1).toString()));
+				prato.setNome(result.getObject(2).toString());
+				prato.setPreco(Float.parseFloat(result.getObject(3).toString()));
+				prato.setDescricao(result.getObject(4).toString());
+				prato.setPeso(Float.parseFloat(result.getObject(5).toString()));
+				pratos.add(prato);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return pratos;
 	}
 
 }

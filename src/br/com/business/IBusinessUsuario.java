@@ -12,4 +12,5 @@ public interface IBusinessUsuario {
 	public boolean isCpf(String cpf) throws BusinessException;
 	public boolean verificarUsuario(Usuario usuario) throws BusinessException;
 	public String pegarNome(String login);
+	public int pegarId(String login, String senha);
 }

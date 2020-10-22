@@ -27,7 +27,6 @@ public class Produto {
 	public String converterDataString(Date data) {
 		SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
 		return f.format(data);
-		
 	}
 	
 	public Date converterStringData(String data) throws ParseException {

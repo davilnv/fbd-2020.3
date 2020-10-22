@@ -7,6 +7,7 @@ import br.com.business.BusinessPrato;
 import br.com.business.BusinessProduto;
 import br.com.business.BusinessUsuario;
 import br.com.exception.BusinessException;
+import br.com.model.Comanda;
 import br.com.model.Prato;
 import br.com.model.Produto;
 import br.com.model.Usuario;
@@ -41,6 +42,11 @@ public class Fachada implements IFachada{
 	public String pegarNomeUsuario(String login) {
 		return businessUsuario.pegarNome(login);
 	}
+	
+	@Override
+	public int pegarIdUsuario(String login, String senha) {
+		return businessUsuario.pegarId(login, senha);
+	}
 
 	@Override
 	public Prato cadastrarPrato(Prato prato) throws BusinessException {
@@ -50,6 +56,10 @@ public class Fachada implements IFachada{
 	@Override
 	public Prato procurarPratoPorId(int id) throws BusinessException {
 		return businessPrato.procurarPorId(id);
+	}
+	
+	public ArrayList<Prato> procurarPratoPorNome(String pesquisa) throws BusinessException {
+		return businessPrato.procurarPorNome(pesquisa);
 	}
 
 	@Override
@@ -71,5 +81,12 @@ public class Fachada implements IFachada{
 	public boolean verificarCodicoComanda(String codigo){
 		return businessComanda.verificarCodico(codigo);
 	}
+
+	@Override
+	public Comanda salvarComanda(Comanda comanda) throws BusinessException {
+		return businessComanda.salvar(comanda);
+	}
+
+	
 
 }

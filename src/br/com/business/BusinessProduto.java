@@ -1,6 +1,5 @@
 package br.com.business;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 
 import br.com.dao.DaoProduto;
@@ -32,7 +31,7 @@ public class BusinessProduto implements IBusinessProduto{
 
 	@Override
 	public ArrayList<Produto> procurarPorNome(String nome) throws BusinessException {
-		if (nome.equals("")) {
+		if (nome.trim().equals("")) {
 			throw new BusinessException("Barra de pesquisa em branco, digite o que deseja pesquisar.");
 		}
 		return daoProduto.procurarPorNome(nome);

@@ -11,4 +11,6 @@ public interface IDaoUsuario {
 	public boolean isCpf(String cpf) throws DaoException;
 	public boolean verificarUsuario(Usuario usuario) throws DaoException;
 	public String pegarNome(String login);
+	public int pegarId(String login, String senha);
+	
 }

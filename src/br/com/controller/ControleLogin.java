@@ -38,6 +38,7 @@ public class ControleLogin implements ActionListener{
 				if (fachada.verificarUsuario(user)) {
 					telaPrincipal.setVisible(true);
 					telaLogin.setVisible(false);
+					usuarioLogado.setId(fachada.pegarIdUsuario(user.getLogin(), user.getSenha()));
 					usuarioLogado.setLogin(login);
 				}
 			} catch (BusinessException e1) {

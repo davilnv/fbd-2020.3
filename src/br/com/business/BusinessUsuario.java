@@ -45,7 +45,7 @@ public class BusinessUsuario implements IBusinessUsuario{
 	@Override
 	public boolean verificarUsuario(Usuario usuario) throws BusinessException{
 		try {
-			if (usuario.getLogin().equals("") || usuario.getSenha().equals("")) {
+			if (usuario.getLogin().trim().equals("") || usuario.getSenha().trim().equals("")) {
 				throw new BusinessException("Todos os campos devem ser preenchidos");
 			}
 			return daoUsuario.verificarUsuario(usuario);
@@ -58,6 +58,11 @@ public class BusinessUsuario implements IBusinessUsuario{
 	@Override
 	public String pegarNome(String login) {
 		return daoUsuario.pegarNome(login);
+	}
+
+	@Override
+	public int pegarId(String login, String senha) {
+		return daoUsuario.pegarId(login, senha);
 	}
 
 }

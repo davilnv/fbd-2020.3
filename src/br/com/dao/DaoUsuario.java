@@ -116,4 +116,22 @@ public class DaoUsuario implements IDaoUsuario{
 		return "";
 	}
 
+	@Override
+	public int pegarId(String login, String senha) {
+		this.abrirConexao();
+		try {
+			this.statement = this.conexao.prepareStatement(SqlUtil.UsuarioSql.SELECT_ID);
+			this.statement.setString(1, login);
+			this.statement.setString(2, senha);
+			this.result = this.statement.executeQuery();
+			while (result.next()) {				
+				return result.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
 }
