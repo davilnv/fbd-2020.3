@@ -58,8 +58,8 @@ public class Prato {
 
 	@Override
 	public String toString() {
-		return "Prato [id=" + id + ", nome=" + nome + ", preco=" + preco + ", descricao=" + descricao + ", peso=" + peso
-				+ "]";
+		return "[ID: " + id + ", Nome: " + nome + ", Preço: " + preco + ", Peso: "
+				+ peso + "]";
 	}
 	
 }

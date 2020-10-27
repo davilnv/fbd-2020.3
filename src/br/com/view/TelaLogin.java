@@ -6,6 +6,7 @@ import java.awt.Graphics;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -17,7 +18,7 @@ public class TelaLogin extends TelaGenerica{
 	
 	private JTextField loginField;
 	private JPasswordField senhaField;
-	private JButton entrarButton;
+	private JButton entrarButton, cadastrarButton;
 	
 	public TelaLogin(String titulo) {
 		super(titulo);
@@ -33,9 +34,14 @@ public class TelaLogin extends TelaGenerica{
 		entrarButton = new JButton("Entrar");
 		entrarButton.setBounds(608, 460, 150, 30);
 		
+		cadastrarButton = new JButton("Cadastrar usuário");
+		cadastrarButton.setFont(new Font("Roboto", Font.BOLD, 13));
+		cadastrarButton.setBounds(608, 520, 150, 13);
+		
 		add(loginField);
 		add(senhaField);
 		add(entrarButton);
+		add(cadastrarButton);
 		
 		add(painel);
 		
@@ -56,6 +62,10 @@ public class TelaLogin extends TelaGenerica{
 
 	public JButton getEntrarButton() {
 		return entrarButton;
+	}
+
+	public JButton getCadastrarButton() {
+		return cadastrarButton;
 	}
 
 	public class Painel extends JPanel{
@@ -82,6 +92,8 @@ public class TelaLogin extends TelaGenerica{
 			g.setColor(Color.RED);
 			g.drawString(mensagem, 533, 450);
 		}
+		
+		
 	}
 	
 }

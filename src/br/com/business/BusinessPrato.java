@@ -15,17 +15,14 @@ public class BusinessPrato implements IBusinessPrato{
 
 	@Override
 	public Prato cadastrar(Prato prato) throws BusinessException {
-		if (prato.getPreco() == 0) {
-			throw new BusinessException("O produto não pode ser cadastrado com preço R$ 0.0");
+		if (prato.getPreco() <= 0 || prato.getNome().trim().equals("") || prato.getDescricao().trim().equals("") || prato.getPeso() <= 0) {
+			throw new BusinessException("Todos os campos devem ser preenchidos");
 		}
 		return daoPrato.cadastrar(prato);
 	}
 
 	@Override
-	public Prato procurarPorId(int id) throws BusinessException{
-		if (id == 0) {
-			throw new BusinessException("O produto não pode ser cadastrado com preço R$ 0.0");
-		}
+	public Prato procurarPorId(int id){
 		return daoPrato.procurarPorId(id);
 	}
 
@@ -35,6 +32,24 @@ public class BusinessPrato implements IBusinessPrato{
 			throw new BusinessException("Barra de pesquisa em branco, digite o que deseja pesquisar.");
 		}
 		return daoPrato.procurarPorNome(nome);
+	}
+
+	@Override
+	public ArrayList<Prato> listarTodos() {
+		return daoPrato.listarTodos();
+	}
+
+	@Override
+	public Prato alterarPrato(Prato prato) throws BusinessException {
+		if (prato.getPreco() <= 0 || prato.getNome().trim().equals("") || prato.getDescricao().trim().equals("") || prato.getPeso() <= 0) {
+			throw new BusinessException("Todos os campos devem ser preenchidos");
+		}
+		return daoPrato.alterarPrato(prato);
+	}
+
+	@Override
+	public int retornarRegistrosSalvos() {
+		return daoPrato.retornarRegistrosSalvos();
 	}
 
 }

@@ -55,10 +55,6 @@ public class DaoUsuario implements IDaoUsuario{
 				user.setSenha(result.getObject(5).toString());
 				usuarios.add(user);
 			}
-//				for( int i = 1; i <= metaData.getColumnCount(); i++ ){
-//					System.out.print( result.getObject( i ) + " " );
-//				}
-//				System.out.println();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -132,6 +128,38 @@ public class DaoUsuario implements IDaoUsuario{
 			e.printStackTrace();
 		}
 		return 0;
+	}
+
+	@Override
+	public boolean alterarNome(String nome, int id) {
+		this.abrirConexao();
+		try {
+			this.statement = conexao.prepareStatement(SqlUtil.UsuarioSql.UPDATE_NOME);
+			this.statement.setString(1, nome);
+			this.statement.setInt(2, id);
+			this.statement.execute();
+			return true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	@Override
+	public boolean alterarSenha(String senha, int id) {
+		this.abrirConexao();
+		try {
+			this.statement = conexao.prepareStatement(SqlUtil.UsuarioSql.UPDATE_SENHA);
+			this.statement.setString(1, senha);
+			this.statement.setInt(2, id);
+			this.statement.execute();
+			return true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
 	}
 
 }

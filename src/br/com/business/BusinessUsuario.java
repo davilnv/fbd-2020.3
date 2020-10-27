@@ -17,9 +17,12 @@ public class BusinessUsuario implements IBusinessUsuario{
 	@Override
 	public Usuario cadastrar(Usuario usuario) throws BusinessException{
 		try {
-			if (daoUsuario.isCpf(usuario.getCpf())) {
+			if(usuario.getNome().trim().equals("") || usuario.getSenha().trim().equals("") || usuario.getLogin().trim().equals("") || usuario.getCpf().trim().equals("")) {
+				throw new BusinessException("Todos os campos devem ser preenchidos");
+			} else if (daoUsuario.isCpf(usuario.getCpf())) {
 				throw new BusinessException("Este usuário já está cadastrado");
 			}
+			
 		} catch (DaoException e) {
 			e.printStackTrace();
 		}
@@ -63,6 +66,22 @@ public class BusinessUsuario implements IBusinessUsuario{
 	@Override
 	public int pegarId(String login, String senha) {
 		return daoUsuario.pegarId(login, senha);
+	}
+
+	@Override
+	public boolean alterarNome(String nome, int id) throws BusinessException {
+		if (nome.trim().equals("")) {
+			throw new BusinessException("Todos os campos devem ser preenchidos");
+		}
+		return daoUsuario.alterarNome(nome, id);
+	}
+
+	@Override
+	public boolean alterarSenha(String senha, int id) throws BusinessException {
+		if (senha.trim().equals("")) {
+			throw new BusinessException("Todos os campos devem ser preenchidos");
+		}
+		return daoUsuario.alterarSenha(senha, id);
 	}
 
 }

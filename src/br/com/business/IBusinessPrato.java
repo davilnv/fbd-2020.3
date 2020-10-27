@@ -9,4 +9,7 @@ public interface IBusinessPrato {
 	public Prato cadastrar(Prato prato) throws BusinessException;
 	public Prato procurarPorId(int id) throws BusinessException;
 	public ArrayList<Prato> procurarPorNome(String nome) throws BusinessException;
+	public ArrayList<Prato> listarTodos();
+	public Prato alterarPrato(Prato prato) throws BusinessException;
+	public int retornarRegistrosSalvos();
 }

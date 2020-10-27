@@ -22,6 +22,8 @@ public class SqlUtil {
 		public final static String SELECT_LOGIN_SENHA = "SELECT * FROM " + NAME_TABLE + " WHERE login = ? AND senha = ?";
 		public static final String SELECT_NOME = "SELECT " + COL_NOME +" FROM " + NAME_TABLE + " WHERE login = ?";
 		public static final String SELECT_ID = "SELECT " + COL_ID +" FROM " + NAME_TABLE + " WHERE login = ? AND senha = ?";
+		public static final String UPDATE_NOME = "UPDATE " + NAME_TABLE + " SET " + COL_NOME + " = ? WHERE " + COL_ID + " = ?;";
+		public static final String UPDATE_SENHA = "UPDATE " + NAME_TABLE + " SET " + COL_SENHA + " = ? WHERE " + COL_ID + " = ?;";
 	}
 	
 	public static class PratoSql {
@@ -39,6 +41,10 @@ public class SqlUtil {
 		public static final String SELECT_PESQUISA_NOME = "SELECT * FROM " + NAME_TABLE +
 				" WHERE LOWER(" + COL_NOME +") LIKE ALL" + 
 				" (string_to_array('%' || regexp_replace(LOWER(?), '\\s+', '% %', 'g') || '%', ' '));";
+		public static final String SELECT_ALL = "SELECT * FROM " + NAME_TABLE + " ORDER BY "+ COL_ID +" ASC;";
+
+		public static final String UPDATE_ALL = "UPDATE " + NAME_TABLE + " SET " + COL_ID + " = ?, " + COL_NOME + " = ?, " + COL_PRECO + " = ?, " + COL_DESCRICAO + " = ?, " + COL_PESO + " = ? WHERE " + COL_ID + " = ?;";;
+		public static final String SELECT_REGISTROS = "SELECT COUNT(*) FROM " + NAME_TABLE;
 	}
 	
 	public static class ProdutoSql {
@@ -59,6 +65,10 @@ public class SqlUtil {
 		public static final String SELECT_PESQUISA_NOME = "SELECT * FROM " + NAME_TABLE +
 				" WHERE LOWER(" + COL_NOME +") LIKE ALL" + 
 				" (string_to_array('%' || regexp_replace(LOWER(?), '\\s+', '% %', 'g') || '%', ' '));";
+		public static final String UPDATE_QUANTIDADE = "UPDATE " + NAME_TABLE + " SET " + COL_QUANTIDADE + " = ? WHERE " + COL_ID + " = ?";
+		public static final String SELECT_ALL = "SELECT * FROM " + NAME_TABLE + " ORDER BY "+ COL_ID +" ASC;";
+		public static final String UPDATE_ALL = "UPDATE " + NAME_TABLE + " SET " + COL_ID + " = ?, " + COL_NOME + " = ?, " + COL_PRECO + " = ?, " + COL_DESCRICAO + " = ?, " + COL_PESO + " = ?, " + COL_VALIDADE + " = ?, " + COL_QUANTIDADE + " = ? WHERE " + COL_ID + " = ?;";
+		public static final String SELECT_REGISTROS = "SELECT COUNT(*) FROM " + NAME_TABLE;
 	}
 	
 	public static class ComandaSql {
@@ -81,5 +91,20 @@ public class SqlUtil {
 				+ COL_TOTAL + ", " + COL_PAGAMENTO + ", " + COL_USUARIO_ID + ", " + COL_PRODUTOS + ", " 
 				+ COL_PRATOS +")" +
 				" VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";;
+	}
+	
+	public static class EstoqueSql {
+		public final static String NAME_TABLE = "estoque";
+		
+		public final static String COL_PRODUTO_ID = "produto_id";
+		public final static String COL_DATA = "data";
+		public final static String COL_USUARIO_ID = "usuario_id";
+		public final static String COL_FUNCAO = "funcao";
+		
+
+		public static final String INSERT_ALL = "INSERT INTO " + NAME_TABLE + "(" + COL_PRODUTO_ID + ", " 
+				+ COL_DATA + ", " + COL_USUARIO_ID + ", " + COL_FUNCAO + ") VALUES (?, ?, ?, ?);";
+		public static final String SELECT_REGISTROS = "SELECT count(*) FROM " + NAME_TABLE + " WHERE " + COL_USUARIO_ID + " = ?;";
+		public static final String SELECT_ID = "SELECT * FROM " + NAME_TABLE + " WHERE " + COL_FUNCAO + " = ? OR " + COL_FUNCAO + " = ?";
 	}
 }

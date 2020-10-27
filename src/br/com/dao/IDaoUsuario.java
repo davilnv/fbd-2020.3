@@ -12,5 +12,7 @@ public interface IDaoUsuario {
 	public boolean verificarUsuario(Usuario usuario) throws DaoException;
 	public String pegarNome(String login);
 	public int pegarId(String login, String senha);
+	public boolean alterarNome(String nome, int id); 
+	public boolean alterarSenha(String senha, int id); 
 	
 }

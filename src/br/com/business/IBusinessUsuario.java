@@ -13,4 +13,6 @@ public interface IBusinessUsuario {
 	public boolean verificarUsuario(Usuario usuario) throws BusinessException;
 	public String pegarNome(String login);
 	public int pegarId(String login, String senha);
+	public boolean alterarNome(String nome, int id) throws BusinessException; 
+	public boolean alterarSenha(String senha, int id) throws BusinessException; 
 }
